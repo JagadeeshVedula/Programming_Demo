@@ -1,0 +1,21 @@
+{
+  "name": "typescript_playwright",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:regression":"playwright test \"@regression\"",
+    "test:API":"set SKIP_SETUP=true&& playwright test apiTest.spec.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.9.3"
+  },
+  "dependencies": {
+    "winston": "^3.19.0"
+  }
+}
