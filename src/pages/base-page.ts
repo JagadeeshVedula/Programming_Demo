@@ -119,6 +119,53 @@ export class BasePage {
 
     }
 
+    async fetch_element(selector:string,retries=3,delay=1000):Promise<Locator>{
+        for (let retry=1;retry<=retries;retry++){
+            try{
+                this.log.debug(`trying to fetch element using selector - ${selector} attempt - ${retry}`)
+                const ele = this.page.locator(selector)
+                await ele.first().waitFor({state:'visible', timeout:3000})
+                this.log.info(`element fetched successfully using selector - ${selector}`)
+                return ele
+            }
+            catch (error){
+                this.log.debug(`failed to fetch element using selector - ${selector} in attempt - ${retry} due to exception - ${error}`)
+                if (retry === retries) {
+                    this.log.error(`failed to fetch element using selector - ${selector} after ${retries} attempts due to exception - ${error}`)
+                    throw new Error(`failed to fetch element using selector - ${selector} after ${retries} attempts due to exception - ${error}`)
+                }
+                this.log.debug(`waiting for ${delay} milli seconds before retrying selector - ${selector}`)
+                await new Promise((resolve)=>setTimeout(resolve,delay))
+            }
+        }
+        throw new Error(`failed to fetch element using selector - ${selector}`)
+    }
+
+    async hover_element(ele:Locator,retries=3,delay=1000):Promise<void>{
+        for (let retry=1;retry<=retries;retry++){
+            try{
+                this.log.debug(`trying to hover over element - ${ele} attempt - ${retry}`)
+                await ele.hover({timeout:3000})
+                this.log.info(`hovered successfully over element - ${ele}`)
+                return
+            }
+            catch (error){
+                this.log.debug(`hovering over element - ${ele} failed in attempt - ${retry} due to exception - ${error}`)
+                if (retry === retries) {
+                    this.log.error(`hovering over element - ${ele} failed after ${retries} attempts due to exception - ${error}`)
+                    throw new Error(`hovering over element - ${ele} failed after ${retries} attempts due to exception - ${error}`)
+                }
+                this.log.debug(`waiting for ${delay} milli seconds before retrying hover on element - ${ele}`)
+                await new Promise((resolve)=>setTimeout(resolve,delay))
+            }
+        }
+    }
+
+    async getText(ele:Locator):Promise<string[]>{
+        return await ele.allTextContents()
+    }
+
+
     async pauseExecution(delay=5000){
         this.log.info(`timeout of ${delay} milliseconds added due to DOM rendering issue`)
         await this.page.waitForTimeout(delay)
