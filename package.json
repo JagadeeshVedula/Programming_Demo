@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "playwright test",
     "test:regression":"playwright test \"@regression\"",
     "test:API":"set SKIP_SETUP=true&& playwright test apiTest.spec.ts"
   },
@@ -16,6 +17,7 @@
     "@types/node": "^25.9.3"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
     "winston": "^3.19.0"
   }
 }
