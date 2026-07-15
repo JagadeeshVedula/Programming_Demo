@@ -21,8 +21,13 @@ test('Test Setup with Admin Login', async ({ page }) => {
     throw new Error('AUTOMATION_USERNAME and AUTOMATION_PASSWORD must be set in the environment')
   }
 
-  await base.navigate('/')
-  await login.clickOnLoginButton()
-  await login.loginWithValidCredentials(credentials)
-  await page.context().storageState({ path: 'storage/user_auth.json' })
+  try {
+    await base.navigate('/')
+    await login.clickOnLoginButton()
+    await login.loginWithValidCredentials(credentials)
+    await page.context().storageState({ path: 'storage/user_auth.json' })
+  } catch (error) {
+    await page.screenshot({ path: `test-results/auth-setup-failure.png`, fullPage: true })
+    throw error
+  }
 })
