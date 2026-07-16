@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
-    "test:regression":"playwright test \"@regression\"",
-    "test:API":"set SKIP_SETUP=true&& playwright test apiTest.spec.ts"
+    "test:regression": "playwright test \"@regression\"",
+    "test:API": "set SKIP_SETUP=true&& playwright test apiTest.spec.ts"
   },
   "keywords": [],
   "author": "",
@@ -14,10 +14,12 @@
   "type": "commonjs",
   "devDependencies": {
     "@playwright/test": "^1.60.0",
-    "@types/node": "^25.9.3"
+    "@types/kafkajs": "^1.8.2",
+    "@types/node": "^25.9.5"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
+    "kafkajs": "^2.2.4",
     "winston": "^3.19.0"
   }
 }
